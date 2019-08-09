@@ -51,7 +51,9 @@ app.post('/message',
     const { message } = request.body
     // using db instead og the initial array
     // messages.push(message)
+    // first need to create a new record in the db...
     const entity = await Message.create({ text: message })
+    // next line is because of the chat history
     const messages = await Message.findAll()
     // stringification
     const data = JSON.stringify(messages)
