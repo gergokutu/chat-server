@@ -3,8 +3,12 @@ const cors = require('cors')
 const Sse = require('json-sse')
 const bodyParser = require('body-parser')
 
+// starting message
 const messages = ['hello world']
-const sse = new Sse(messages)
+
+// create string from JSON
+const data = JSON.stringify(messages)
+const sse = new Sse(data)
 
 const app = express()
 
@@ -20,11 +24,17 @@ app.use(jsonParser)
 app.get('/stream', sse.init)
 
 app.post('/message', (request, response) => {
-  const {message} =request.body
+  const { message } = request.body
   messages.push(message)
-  
-  sse.updateInit(messages)
-  sse.send(message)
+
+  // stringification
+  const data = JSON.stringify(messages)
+
+  sse.updateInit(data)
+  // broadcast (send everybody) all the messages with this
+  // so use messages instead of message
+  // sse.send(message)
+  sse.send(messages)
 
   response.send()
 })
