@@ -23,7 +23,6 @@ const Message = db.define(
 // const messages = ['hello world']
 // create string from JSON » serialize
 // const data = JSON.stringify(messages)
-
 const stream = new Sse()
 
 const app = express()
