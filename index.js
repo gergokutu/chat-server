@@ -19,6 +19,7 @@ app.get('/stream', sse.init)
 app.post('/message', (request, response) => {
   const {message} =request.body
   sse.send(message)
+  response.send()
 })
 
 const port = process.env.PORT || 5000
