@@ -14,7 +14,8 @@ db
 const Message = db.define(
   'message',
   {
-    text: Sequilize.STRING
+    text: Sequilize.STRING,
+    user: Sequilize.STRING
   }
 )
 // starting message
@@ -48,11 +49,14 @@ app.get('/stream',
 
 app.post('/message',
   async (request, response) => {
-    const { message } = request.body
+    const { message, user } = request.body
     // using db instead og the initial array
     // messages.push(message)
     // first need to create a new record in the db...
-    const entity = await Message.create({ text: message })
+    const entity = await Message.create({
+      text: message,
+      user
+    })
     // next line is because of the chat history
     const messages = await Message.findAll()
     // stringification
