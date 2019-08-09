@@ -6,9 +6,9 @@ const bodyParser = require('body-parser')
 // starting message
 const messages = ['hello world']
 
-// create string from JSON
+// create string from JSON » serialize
 const data = JSON.stringify(messages)
-const sse = new Sse(data)
+const stream = new Sse(data)
 
 const app = express()
 
@@ -21,7 +21,7 @@ app.use(jsonParser)
 // not calling just passing the sse.init function
 // keeps the request alive
 // with 1 request we can send many responses
-app.get('/stream', sse.init)
+app.get('/stream', stream.init)
 
 app.post('/message', (request, response) => {
   const { message } = request.body
@@ -30,13 +30,13 @@ app.post('/message', (request, response) => {
   // stringification
   const data = JSON.stringify(messages)
 
-  sse.updateInit(data)
+  stream.updateInit(data)
   // broadcast (send everybody) all the messages with this
   // so use messages instead of message
-  // sse.send(message)
-  sse.send(messages)
+  // stream.send(message)
+  stream.send(data)
 
-  response.send()
+  response.send(messages)
 })
 
 const port = process.env.PORT || 5000
