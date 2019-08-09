@@ -1,6 +1,10 @@
 const express = require('express')
+const cors = require('cors')
 const Sse = require('json-sse')
 const bodyParser = require('body-parser')
+const cors = require('cors')
+
+
 
 const messages = ['hello world']
 
@@ -8,6 +12,9 @@ const sse = new Sse(messages)
 
 
 const app = express()
+
+const middleWare = cors()
+app.use(middleWare)
 
 const jsonParser = bodyParser.json()
 app.use(jsonParser)
