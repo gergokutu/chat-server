@@ -8,7 +8,7 @@ const databaseUrl = process.env.DATABASE_URL || 'postgres://postgres:password@lo
 const db = new Sequilize(databaseUrl)
 
 db
-  .sync({ force: false })
+  .sync({ force: true })
   .then(() => console.log('db synced'))
 
 const Message = db.define(
